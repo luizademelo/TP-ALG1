@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int MAX = 100000;
+const int MAX = 10001;
 
 // data structures used to implement Kosaraju's
 // Algorithm. Please refer
@@ -18,6 +18,19 @@ int scc[MAX];
 
 // counter maintains the number of the SCC
 int counter = 1;
+
+void limpa()
+{
+    for(int i = 0; i < MAX; i++)
+    {
+        adj[i].clear(); 
+        adjInv[i].clear(); 
+        visited[i] = false; 
+        visitedInv[i] = false; 
+    }
+    s = stack<int>(); 
+}
+
 
 // adds edges to form the original graph
 void addEdges(int a, int b)
@@ -144,6 +157,8 @@ void is2Satisfiable(int n, int m, vector<int> a, vector<int> b)
     return;
 }
 
+
+
 int main()
 {
     // n is the number of variables
@@ -203,6 +218,7 @@ int main()
         }
 
         is2Satisfiable(s, p * 2, a, b);
+        limpa(); 
     }
     return 0;
 }
