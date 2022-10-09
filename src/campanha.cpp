@@ -77,17 +77,13 @@ void limpa(vector<int> a, vector<int> b)
     counter = 1;
 }
 
-void addEdges(int v1, int v2)
+void criaAresta(int v1, int v2)
 {
     adj[v1].push_back(v2);
-}
-
-void addEdgesInverse(int v1, int v2)
-{
     adjInv[v2].push_back(v1);
 }
 
-void dfsFirst(int u)
+void dfs(int u)
 {
     if (visitado[u])
         return;
@@ -95,7 +91,7 @@ void dfsFirst(int u)
     visitado[u] = 1;
 
     for (int i = 0; i < adj[u].size(); i++)
-        dfsFirst(adj[u][i]);
+        dfs(adj[u][i]);
 
     s.push(u);
 }
@@ -132,7 +128,7 @@ void dfsFullGraph(int P)
 {
     for (int i = 1; i <= 2 * P; i++)
         if (!visitado[i])
-            dfsFirst(i);
+            dfs(i);
 }
 
 void calculaCFC()
@@ -156,34 +152,26 @@ void constroiGrafo(int S, int P, vector<int> a, vector<int> b)
     {
         if (a[i] > 0 && b[i] > 0)
         {
-            addEdges(a[i] + P, b[i]);
-            addEdgesInverse(a[i] + P, b[i]);
-            addEdges(b[i] + P, a[i]);
-            addEdgesInverse(b[i] + P, a[i]);
+            criaAresta(a[i] + P, b[i]);
+            criaAresta(b[i] + P, a[i]);
         }
 
         else if (a[i] > 0 && b[i] < 0)
         {
-            addEdges(a[i] + P, P - b[i]);
-            addEdgesInverse(a[i] + P, P - b[i]);
-            addEdges(-b[i], a[i]);
-            addEdgesInverse(-b[i], a[i]);
+            criaAresta(a[i] + P, P - b[i]);
+            criaAresta(-b[i], a[i]);
         }
 
         else if (a[i] < 0 && b[i] > 0)
         {
-            addEdges(-a[i], b[i]);
-            addEdgesInverse(-a[i], b[i]);
-            addEdges(b[i] + P, P - a[i]);
-            addEdgesInverse(b[i] + P, P - a[i]);
+            criaAresta(-a[i], b[i]);
+            criaAresta(b[i] + P, P - a[i]);
         }
 
         else
         {
-            addEdges(-a[i], P - b[i]);
-            addEdgesInverse(-a[i], P - b[i]);
-            addEdges(-b[i], P - a[i]);
-            addEdgesInverse(-b[i], P - a[i]);
+            criaAresta(-a[i], P - b[i]);
+            criaAresta(-b[i], P - a[i]);
         }
     }
 }
