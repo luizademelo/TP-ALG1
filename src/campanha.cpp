@@ -1,3 +1,7 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "../include/campanha.hpp"
+
 const int MAX = 20001;
 
 vector<int> adj[MAX];
@@ -193,26 +197,4 @@ void test(int S, int P, vector<int> a, vector<int> b)
     calculaCFC(); 
 
     escreveResultado(P);
-}
-
-int main()
-{
-    while (true)
-    {
-
-        int S; // numero de seguidores
-        int P; // numero de propostas
-        cin >> S >> P;
-        vector<int> a;
-        vector<int> b;
-
-        if (S == 0)
-            break;
-
-        leEntrada(S, &a, &b); 
-
-        test(S, P, a, b);
-        limpa(a,b);
-    }
-    return 0;
 }

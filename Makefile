@@ -1,13 +1,29 @@
-CC=gcc
-CFLAGS=-I. -Wall -Wextra -Werror -std=c99 -pedantic -O2
-DEPS = campanha.h
-OBJ = campanha.o main.o 
+CC = g++
+LIBS = -lm 
+SRC = src
+OBJ = ./obj/
+INC = ./include/
+BIN = ./bin/
+OBJS = $(OBJ)/campanha.o $(OBJ)/main.o
+HDRS = $(INC)/campanha.hpp
+CFLAGS = -g -Wall -c -I$(INC)
 
-%.o: %.c $(DEPS)
-	$(CC) -c -o $@ $< $(CFLAGS)
+EXE = $(BIN)/tp01
 
-main: $(OBJ)
-	$(CC) -o $@ $^ $(CFLAGS)
+all: run
+
+run: $(EXE)
+	$(EXE) < in.txt
+
+$(BIN)/tp01: $(OBJS)
+	$(CC) -g -o $(BIN)/tp01 $(OBJS) $(LIBS)
+
+$(OBJ)/main.o: $(HDRS) $(SRC)/main.cpp
+	$(CC)  $(CFLAGS) -o $(OBJ)/main.o $(SRC)/main.cpp 
+
+$(OBJ)/campanha.o: $(HDRS) $(SRC)/campanha.cpp
+	$(CC) $(CFLAGS) -o $(OBJ)/campanha.o $(SRC)/campanha.cpp 
 
 clean:
-	rm -f *.o main
+	rm -f $(EXE)* $(OBJS)* $(BIN)* 
+	clear   
