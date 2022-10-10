@@ -8,8 +8,8 @@ int main()
         int S; // numero de seguidores
         int P; // numero de propostas
         cin >> S >> P;
-        vector<int> a;
-        vector<int> b;
+        vector<Vertice> a;
+        vector<Vertice> b;
 
         if (S == 0)
             break;
