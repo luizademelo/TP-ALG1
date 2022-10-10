@@ -4,10 +4,7 @@
 
 const int MAX = 20001;
 
-vector<int> adj[MAX];
-vector<int> adjInv[MAX];
-bool visitado[MAX];
-bool visitadoInv[MAX];
+Grafo g; 
 stack<int> s;
 
 int cfc[MAX];
@@ -74,10 +71,10 @@ void limpa(vector<Vertice> a, vector<Vertice> b)
 {
     for (int i = 0; i < MAX; i++)
     {
-        adj[i].clear();
-        adjInv[i].clear();
-        visitado[i] = false;
-        visitadoInv[i] = false;
+        g.adj[i].clear();
+        g.adjInv[i].clear();
+        g.visitado[i] = false;
+        g.visitadoInv[i] = false;
         cfc[i] = 1;
     }
     s = stack<int>();
@@ -88,32 +85,32 @@ void limpa(vector<Vertice> a, vector<Vertice> b)
 
 void criaAresta(int v1, int v2)
 {
-    adj[v1].push_back(v2);
-    adjInv[v2].push_back(v1);
+    g.adj[v1].push_back(v2);
+    g.adjInv[v2].push_back(v1);
 }
 
 void dfs(int u)
 {
-    if (visitado[u])
+    if (g.visitado[u])
         return;
 
-    visitado[u] = 1;
+    g.visitado[u] = true;
 
-    for (long unsigned int i = 0; i < adj[u].size(); i++)
-        dfs(adj[u][i]);
+    for (long unsigned int i = 0; i < g.adj[u].size(); i++)
+        dfs(g.adj[u][i].id);
 
     s.push(u);
 }
 
 void dfsCFC(int u)
 {
-    if (visitadoInv[u])
+    if (g.visitadoInv[u])
         return;
 
-    visitadoInv[u] = 1;
+    g.visitadoInv[u] = true;
 
-    for (long unsigned int i = 0; i < adjInv[u].size(); i++)
-        dfsCFC(adjInv[u][i]);
+    for (long unsigned int i = 0; i < g.adjInv[u].size(); i++)
+        dfsCFC(g.adjInv[u][i].id);
 
     cfc[u] = numComponente;
 }
@@ -136,7 +133,7 @@ void escreveResultado(int P)
 void dfsFullGraph(int P)
 {
     for (int i = 1; i <= 2 * P; i++)
-        if (!visitado[i])
+        if (!g.visitado[i])
             dfs(i);
 }
 
@@ -147,7 +144,7 @@ void calculaCFC()
         int S = s.top();
         s.pop();
 
-        if (!visitadoInv[S])
+        if (!g.visitadoInv[S])
         {
             dfsCFC(S);
             numComponente++;
