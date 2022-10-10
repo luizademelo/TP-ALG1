@@ -12,7 +12,7 @@ void leEntrada(int S, vector<int> *a, vector<int> *b);
 void limpa(vector<int> a, vector<int> b); 
 void addEdges(int v1, int v2); 
 void dfsFirst(int u); 
-void dfsSecond(int u); 
+void dfsCFC(int u); 
 void escreveResultado(int P);
 void dfsFullGraph(int P);
 void calculaCFC();

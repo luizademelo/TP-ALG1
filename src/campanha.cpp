@@ -13,7 +13,7 @@ stack<int> s;
 int cfc[MAX];
 
 
-int counter = 1;
+int numComponente = 1;
 
 void leEntrada(int S, vector<int> *a, vector<int> *b)
 {
@@ -74,7 +74,7 @@ void limpa(vector<int> a, vector<int> b)
     s = stack<int>();
     a.clear(); 
     b.clear(); 
-    counter = 1;
+    numComponente = 1;
 }
 
 void criaAresta(int v1, int v2)
@@ -96,7 +96,7 @@ void dfs(int u)
     s.push(u);
 }
 
-void dfsSecond(int u)
+void dfsCFC(int u)
 {
     if (visitadoInv[u])
         return;
@@ -104,9 +104,9 @@ void dfsSecond(int u)
     visitadoInv[u] = 1;
 
     for (int i = 0; i < adjInv[u].size(); i++)
-        dfsSecond(adjInv[u][i]);
+        dfsCFC(adjInv[u][i]);
 
-    cfc[u] = counter;
+    cfc[u] = numComponente;
 }
 
 void escreveResultado(int P)
@@ -140,8 +140,8 @@ void calculaCFC()
 
         if (!visitadoInv[S])
         {
-            dfsSecond(S);
-            counter++;
+            dfsCFC(S);
+            numComponente++;
         }
     }
 }
