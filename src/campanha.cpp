@@ -5,7 +5,7 @@
 const int MAX = 20001;
 
 Grafo g; 
-stack<int> s;
+vector<int> ordemDFS;
 
 int cfc[MAX];
 
@@ -77,7 +77,7 @@ void limpa(vector<Vertice> a, vector<Vertice> b)
         g.visitadoInv[i] = false;
         cfc[i] = 1;
     }
-    s = stack<int>();
+    ordemDFS = vector<int>();
     a.clear();
     b.clear();
     numComponente = 1;
@@ -99,11 +99,12 @@ void dfs(int u)
     for (long unsigned int i = 0; i < g.adj[u].size(); i++)
         dfs(g.adj[u][i].id);
 
-    s.push(u);
+    ordemDFS.push_back(u);
 }
 
 void dfsCFC(int u)
 {
+    // calcula qual é a componente conexa de cada vértice 
     if (g.visitadoInv[u])
         return;
 
@@ -119,7 +120,7 @@ void escreveResultado(int P)
 {
     for (int i = 1; i <= P; i++)
     {
-        if (cfc[i] == cfc[i + P])
+        if (!(cfc[i] != cfc[i + P]))
         {
             cout << "nao\n";
             return;
@@ -132,22 +133,21 @@ void escreveResultado(int P)
 
 void dfsFullGraph(int P)
 {
+    // percorre o grafo inteiro, inclusive as componentes que estão isoladas 
     for (int i = 1; i <= 2 * P; i++)
         if (!g.visitado[i])
             dfs(i);
 }
 
-void calculaCFC()
+void calculaCFC(int P)
 {
-    while (!s.empty())
+    for(int i = 0; i < 2*P; i++)
     {
-        int S = s.top();
-        s.pop();
-
-        if (!g.visitadoInv[S])
+        int v = ordemDFS[(P*2)-i-1]; 
+        if(!g.visitadoInv[v])
         {
-            dfsCFC(S);
-            numComponente++;
+            dfsCFC(v); 
+            numComponente++; 
         }
     }
 }
@@ -188,7 +188,7 @@ void test(int S, int P, vector<Vertice> a, vector<Vertice> b)
 
     dfsFullGraph(P);
 
-    calculaCFC();
+    calculaCFC(P);
 
     escreveResultado(P);
 }

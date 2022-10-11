@@ -12,8 +12,7 @@ EXE = $(BIN)/tp01
 
 all: run
 
-run: $(EXE)
-	$(EXE) < in.txt
+run: $(BIN)/tp01
 
 $(BIN)/tp01: $(OBJS)
 	$(CC) -g -o $(BIN)/tp01 $(OBJS) $(LIBS)

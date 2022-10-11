@@ -26,8 +26,7 @@ void
 test(int S, int P, vector<Vertice> a, vector<Vertice> b);
 void leEntrada(int S, vector<Vertice> *a, vector<Vertice> *b);
 void limpa(vector<Vertice> a, vector<Vertice> b);
-void addEdges(int v1, int v2);
-void dfsFirst(int u);
+void dfs(int u);
 void dfsCFC(int u);
 void escreveResultado(int P);
 void dfsFullGraph(int P);
